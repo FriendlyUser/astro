@@ -68,7 +68,35 @@ By default, the build output will be placed at `dist/`. You may deploy this `dis
 
 ### GitHub Actions
 
-TODO: We'd love an example action snippet to share here!
+```yaml
+name: Deploy Site
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  make_website:
+    name: Generate Website
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        name: setup node
+        with:
+          node-version: '14'
+      - name: install dependencies
+        run: npm install
+      - name: build web
+        run: |
+          npm run build
+      - name: Deploy 🚀
+        uses: JamesIves/github-pages-deploy-action@4.1.4
+        with:
+          BRANCH: gh-pages # The branch the action should deploy to.
+          FOLDER: dist # The folder the action should deploy.
+
+```
 
 ### Travis CI
 
